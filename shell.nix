@@ -109,6 +109,27 @@ let
       description = "Quantum Software Development Kit for writing quantum computing experiments, programs, and applications.";
     };
   };
+  qasm2image = pkgs.python36Packages.buildPythonPackage rec {
+    pname = "qasm2image";
+    version = "0.5.0";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "nelimeee";
+      repo = "qasm2image";
+      rev = "7f3c3e4d1701b8b284ef0352aa3a47722ebbbcaa";
+      sha256 = "129xlpwp36h2czzw1wcl8df2864zg3if2gaad1v18ah1cf68b0f3";
+    };
+
+    doCheck = false;
+
+    propagatedBuildInputs = with pkgs.python36Packages; [
+      cairocffi
+      cairosvg
+      cffi
+      qiskit
+      svgwrite
+    ];
+  };
 in
 with pkgs;
 stdenv.mkDerivation rec {
@@ -118,5 +139,7 @@ stdenv.mkDerivation rec {
     bashInteractive
     python36
     qiskit
+    qasm2image
+    python36Packages.jupyter
   ];
 }
